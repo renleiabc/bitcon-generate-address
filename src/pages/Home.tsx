@@ -1,40 +1,35 @@
-import * as bip39 from '@scure/bip39';
-import { wordlist } from '@scure/bip39/wordlists/english';
-import * as ecc from 'tiny-secp256k1-browserify/lib';
-import BIP32Factory, { BIP32Interface } from 'bip32';
+import { BIP32Interface } from 'bip32';
 import { Button, Input, Space, Select, Message, Tabs, Typography } from '@arco-design/web-react';
 import { useState } from 'react';
-import { Buffer } from 'buffer-browser';
-import * as Btc from 'bitcoinjs-lib';
-import { ECPairFactory, ECPairAPI } from 'ecpair';
 import GenerateBip32 from '@/componments/GenerateBip32';
 import GenerateBip44 from '@/componments/GenerateBip44';
 import GenerateBip49 from '@/componments/GenerateBip49';
 import GenerateBip84 from '@/componments/GenerateBip84';
 import GenerateBip141 from '@/componments/GenerateBip141';
-import { getNetwork, getCoinType, networkType } from '@/assets/plugin';
+import {
+  getNetwork,
+  getCoinType,
+  networkType,
+  generateRoot,
+  generateMnemonic,
+  validateMnemonic
+} from '@/assets/plugin';
 
-const ECPair: ECPairAPI = ECPairFactory(ecc);
-console.log('🚀 ~ file: Home.tsx:17 ~ ECPair:', ECPair);
 const TextArea = Input.TextArea;
 const Option = Select.Option;
 const TabPane = Tabs.TabPane;
-const bip32 = BIP32Factory(ecc);
-console.log('🚀 ~ file: Home.tsx:22 ~ bip32:', bip32);
 const style = {
   textAlign: 'center' as const,
   marginTop: 20
 };
-function uint8Array(uint8Array: Uint8Array) {
-  return Array.prototype.map.call(uint8Array, (x) => ('00' + x.toString(16)).slice(-2)).join('');
-}
+
 const Home = () => {
   const [value, setValue] = useState(128);
   const [words, setWords] = useState('');
   const [seedHex, setSeedHex] = useState('');
   const [seedXprv, setSeedXprv] = useState('');
   const [type, setType] = useState(1);
-  const [network, setNetwork] = useState<networkType>(Btc.networks.bitcoin);
+  const [network, setNetwork] = useState<networkType>(getNetwork(1));
   const [coinType, setCoinType] = useState(0);
   const [root, setRoot] = useState<null | BIP32Interface>(null);
   const bitcoinNetwork = [
@@ -74,25 +69,20 @@ const Home = () => {
     }
   ];
   const handleGenerateWords = (words: string, network: networkType) => {
-    const seedUint8Aarray = bip39.mnemonicToSeedSync(words);
-    const arrBuffer = Buffer.from(seedUint8Aarray) as any;
-    const root = bip32.fromSeed(arrBuffer, network);
-    console.log('🚀 ~ file: Home.tsx:77 ~ handleGenerateWords ~ root:', root);
-    const rootPriateKey = root.toWIF();
-    console.log('🚀 ~ file: Home.tsx:76 ~ handleGenerateWords ~ rootPriateKey:', rootPriateKey);
+    const { root, seed } = generateRoot(words, network);
+    console.log('🚀 ~ file: Home.tsx:73 ~ handleGenerateWords ~ root:', root);
     setRoot(root);
-    setSeedHex(uint8Array(seedUint8Aarray));
+    setSeedHex(seed);
     setSeedXprv(root.toBase58());
   };
   const handleChange = (value: number) => {
-    console.log('🚀 ~ file: Home.tsx:34 ~ handleChange ~ value:', value);
     setValue(value);
-    const stringWords = bip39.generateMnemonic(wordlist, value);
+    const stringWords = generateMnemonic(value);
     setWords(stringWords);
     handleGenerateWords(stringWords, network);
   };
   const handleGenerate = () => {
-    const boo = bip39.validateMnemonic(words, wordlist);
+    const boo = validateMnemonic(words);
     if (!boo) {
       Message.error({
         content: `The mnemonic words are not standardized`,

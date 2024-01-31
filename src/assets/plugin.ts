@@ -1,8 +1,13 @@
 import * as Btc from 'bitcoinjs-lib';
 import * as ecc from 'tiny-secp256k1-browserify/lib';
-import { BIP32Interface } from 'bip32';
+import BIP32Factory, { BIP32Interface } from 'bip32';
 import { ECPairFactory, ECPairAPI } from 'ecpair';
+import * as bip39 from '@scure/bip39';
+import { wordlist } from '@scure/bip39/wordlists/english';
+import { Buffer } from 'buffer-browser';
+
 const ECPair: ECPairAPI = ECPairFactory(ecc);
+const bip32 = BIP32Factory(ecc);
 export type generateType = {
   key: string;
   path: string;
@@ -12,6 +17,33 @@ export type generateType = {
 };
 export type networkType = Btc.networks.Network;
 export type BIP32Type = BIP32Interface;
+
+/**
+ * @name: handle
+ * @Date: 2024-01-31 17:20:50
+ * @description:
+ * @param {*} value 128 |  160  | 192 | 224 | 256
+ * @return {*}
+ */
+export function generateMnemonic(value = 128) {
+  const stringWords = bip39.generateMnemonic(wordlist, value);
+  return stringWords;
+}
+export function uint8Array(uint8Array: Uint8Array) {
+  return Array.prototype.map.call(uint8Array, (x) => ('00' + x.toString(16)).slice(-2)).join('');
+}
+export const generateRoot = (words: string, network: networkType) => {
+  const seedUint8Aarray = bip39.mnemonicToSeedSync(words);
+  const arrBuffer = Buffer.from(seedUint8Aarray) as any;
+  const root = bip32.fromSeed(arrBuffer, network);
+  const rootPriateKey = root.toWIF();
+  console.log('🚀 ~ file: Home.tsx:76 ~ handleGenerateWords ~ rootPriateKey:', rootPriateKey);
+  const seed = uint8Array(seedUint8Aarray);
+  return { root, seed };
+};
+export function validateMnemonic(words: string) {
+  return bip39.validateMnemonic(words, wordlist);
+}
 /* export function getPrivateKey(node: BIP32Interface) {
   console.log('🚀 ~ file: plugin.ts:5 ~ getPrivateKey ~ node:', node);
   return node.toWIF();
