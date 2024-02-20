@@ -18,14 +18,14 @@ The core code is located in the plugin. ts file
 
 ### Reference documents
 
-[How to generate child public keys from bip32 public key](https://github.com/bitcoinjs/bitcoinjs-lib/issues/997){:target="\_blank"}
+<a href="https://github.com/bitcoinjs/bitcoinjs-lib/issues/997" target="_blank">How to generate child public keys from bip32 public key</a>
 
-[Version bytes for BIP32 extended public and private keys](https://electrum.readthedocs.io/en/latest/xpub_version_bytes.html){:target="\_blank"}
+<a href="https://electrum.readthedocs.io/en/latest/xpub_version_bytes.html" target="_blank">Version bytes for BIP32 extended public and private keys</a>
 
-[Swan's Address Derivation Library](https://www.npmjs.com/package/@swan-bitcoin/xpub-lib){:target="\_blank"}
+<a href="https://www.npmjs.com/package/@swan-bitcoin/xpub-lib" target="_blank">Swan's Address Derivation Library</a>
 
-[bitcoin xpub to ypub python](https://github.com/mchalise/bitcoin-xpub-to-ypub/blob/master/convert_xpub_to_ypub.py){:target="\_blank"}
+<a href="https://github.com/mchalise/bitcoin-xpub-to-ypub/blob/master/convert_xpub_to_ypub.py" target="_blank">bitcoin xpub to ypub python</a>
 
-[bitcoin xpub to ypub javascript](https://github.com/bitcoinjs/bitcoinjs-lib/issues/1258){:target="\_blank"}
+<a href="https://github.com/bitcoinjs/bitcoinjs-lib/issues/1258" target="_blank">bitcoin xpub to ypub javascript</a>
 
-[bip39 generate result](https://iancoleman.io/bip39/){:target="\_blank"}
+<a href="https://iancoleman.io/bip39/" target="_blank">bip39 generate result</a>
