@@ -18,6 +18,10 @@ The core code is located in the plugin. ts file
 
 ### Reference documents
 
+<a href="https://www.blockvalue.com/blockchain/20191228142231.html" target="_blank">以 1、3、bc1 开头的比特币地址区别</a>
+
+<a href="https://github.com/peli-pro/coldcard_address_generator/blob/master/coldcard_address_generator_node.js" target="_blank">coldcard_address_generator_node</a>
+
 <a href="https://github.com/bitcoinjs/bitcoinjs-lib/issues/997" target="_blank">How to generate child public keys from bip32 public key</a>
 
 <a href="https://electrum.readthedocs.io/en/latest/xpub_version_bytes.html" target="_blank">Version bytes for BIP32 extended public and private keys</a>

@@ -196,7 +196,6 @@ export function getCoinType(val: number) {
   return coin_type;
 }
 export function getBip44Address(masterNode: BIP32Interface, network: Btc.networks.Network) {
-  /* https://www.blockvalue.com/blockchain/20191228142231.html */
   //  1 开头的地址，采用 P2PKH ，P2PKH(Pay-to-Pubkey Hash)，支付公钥哈希，即比特币交易输入输出脚本，采用公钥及公钥哈希。 1 开头的传统地址，上线至今，一直被支持，我们可以从它发送 BTC 到下面介绍的多签地址和隔离见证地址。
   const keyhash = Btc.crypto.hash160(masterNode.publicKey);
   console.log('🚀 ~ file: GenerateData.tsx:23 ~ getAddress ~ keyhash:', keyhash);
@@ -207,8 +206,6 @@ export function getBip44Address(masterNode: BIP32Interface, network: Btc.network
   return Btc.payments.p2pkh({ pubkey: masterNode.publicKey, network }).address; // p2pkh = 44
 }
 export function getBip49Address(masterNode: BIP32Interface, network: Btc.networks.Network) {
-  // https://github.com/peli-pro/coldcard_address_generator/blob/master/coldcard_address_generator_node.js
-  /* https://www.blockvalue.com/blockchain/20191228142231.html */
   /* 多钱地址 3开头的地址，比如 3EktnHQD7RiAE6uzMj2ZifT9YgRrkSgzQX。2012年的比特币改进提案中，新增 P2SH 的地址。
 P2SH (Pay-to-Script-Hash)，支付脚本哈希，即比特币交易输入输出脚本，采用赎回脚本及赎回脚本哈希。其地址结构类似于 P2PKH，但它支持比传统地址更复杂的功能。P2SH 脚本函数最常用于 multisig 地址，这些地址可以指定多重数字签名来授权事务。举个例子：某个3开头的地址由三人控制，其中，任意两人同意，便可发起转账。 */
   // const keyhash = Btc.crypto.hash160(masterNode.publicKey);
@@ -262,13 +259,11 @@ export function fromCharCode(hex: string) {
   return resultStr.join('').trim();
 }
 export function getBip84Address(masterNode: BIP32Interface, network: Btc.networks.Network) {
-  /* https://www.blockvalue.com/blockchain/20191228142231.html */
   // bc1 开头的地址，是由新的隔离见证脚本生成的地址（P2WPKH 或 P2WSH），是纯正的隔离见证地址。它采用 Bech32 编码，其风格和 P2PKH 和 P2SH（即 1开头和 3开头）风格的地址完全不同。 由于使用 bc1 前缀，它比上面两种地址要长，由42个符号组成
   return Btc.payments.p2wpkh({ pubkey: masterNode.publicKey, network }).address; // p2wpkh = 84 以bc开头的地址
 }
 
 /* function getAddress(masterNode: BIP32Interface) {
-  /// https://www.blockvalue.com/blockchain/20191228142231.html
   // 多钱地址 3开头的地址，比如 3EktnHQD7RiAE6uzMj2ZifT9YgRrkSgzQX。2012年的比特币改进提案中，新增 P2SH 的地址。P2SH (Pay-to-Script-Hash)，支付脚本哈希，即比特币交易输入输出脚本，采用赎回脚本及赎回脚本哈希。其地址结构类似于 P2PKH，但它支持比传统地址更复杂的功能。P2SH 脚本函数最常用于 multisig 地址，这些地址可以指定多重数字签名来授权事务。举个例子：某个3开头的地址由三人控制，其中，任意两人同意，便可发起转账。
   const keyhash = Btc.crypto.hash160(masterNode.publicKey);
   console.log('🚀 ~ file: GenerateData.tsx:23 ~ getAddress ~ keyhash:', keyhash);
