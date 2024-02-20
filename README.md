@@ -15,3 +15,10 @@ pnpm dev
 ```
 
 The core code is located in the plugin. ts file
+
+[How to generate child public keys from bip32 public key](https://github.com/bitcoinjs/bitcoinjs-lib/issues/997)
+[Version bytes for BIP32 extended public and private keys](https://electrum.readthedocs.io/en/latest/xpub_version_bytes.html)
+[Swan's Address Derivation Library](https://www.npmjs.com/package/@swan-bitcoin/xpub-lib)
+[bitcoin xpub to ypub python](https://github.com/mchalise/bitcoin-xpub-to-ypub/blob/master/convert_xpub_to_ypub.py)
+[bitcoin xpub to ypub javascript](https://github.com/bitcoinjs/bitcoinjs-lib/issues/1258)
+[bip39 generate result](https://iancoleman.io/bip39/)
