@@ -11,7 +11,7 @@ function Layout() {
         <a href="https://vitejs.dev" target="_blank" rel="noreferrer">
           <img src={viteLogo} className="logo" alt="Vite logo" />
         </a>
-        <a href="https://vitejs.dev" target="_blank" rel="noreferrer">
+        <a href="https://bitcoin.org" target="_blank" rel="noreferrer">
           <img src={bitcoinLogo} className="logo" alt="Vite logo" />
         </a>
         <a href="https://react.dev" target="_blank" rel="noreferrer">
