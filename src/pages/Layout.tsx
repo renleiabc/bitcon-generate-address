@@ -1,6 +1,7 @@
 import { Outlet, NavLink, useNavigation } from 'react-router-dom';
 import reactLogo from '@/assets/react.svg';
 import viteLogo from '/vite.svg';
+import bitcoinLogo from '@/assets/bitcoin.png';
 function Layout() {
   const navigation = useNavigation();
 
@@ -9,6 +10,9 @@ function Layout() {
       <div className="flex justify-around">
         <a href="https://vitejs.dev" target="_blank" rel="noreferrer">
           <img src={viteLogo} className="logo" alt="Vite logo" />
+        </a>
+        <a href="https://vitejs.dev" target="_blank" rel="noreferrer">
+          <img src={bitcoinLogo} className="logo" alt="Vite logo" />
         </a>
         <a href="https://react.dev" target="_blank" rel="noreferrer">
           <img src={reactLogo} className="logo react" alt="React logo" />
