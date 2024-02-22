@@ -5,22 +5,23 @@ import { generateType, BIP32Type, networkType, getBip84Address, getPublicKey, ge
 const purpose = 84;
 const arrNum = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
 const GenerateData = ({ root, network, coinType }: { root: BIP32Type; network: networkType; coinType: number }) => {
-  console.log('🚀 ~ file: GenerateData.tsx:9 ~ GenerateData ~ root:', root.toWIF());
   const [bitcoinData, setBitcoinData] = useState<generateType[]>([]);
   const handleGenerate = useCallback(() => {
-    const arr = arrNum.map((num: number) => {
-      const path = `m/${purpose}'/${coinType}'/0'/0/${num}`;
-      const child = root.derivePath(path);
-      const item: generateType = {
-        key: `${num + 1}`,
-        path,
-        address: getBip84Address(child, network)!,
-        publicKey: getPublicKey(child, network)!,
-        privateKey: getPrivateKey(child, network)!
-      };
-      return item;
-    });
-    setBitcoinData(arr);
+    if (root) {
+      const arr = arrNum.map((num: number) => {
+        const path = `m/${purpose}'/${coinType}'/0'/0/${num}`;
+        const child = root.derivePath(path);
+        const item: generateType = {
+          key: `${num + 1}`,
+          path,
+          address: getBip84Address(child, network)!,
+          publicKey: getPublicKey(child, network)!,
+          privateKey: getPrivateKey(child, network)!
+        };
+        return item;
+      });
+      setBitcoinData(arr);
+    }
   }, [coinType, network, root]);
   useEffect(() => {
     handleGenerate();
@@ -47,7 +48,7 @@ const GenerateData = ({ root, network, coinType }: { root: BIP32Type; network: n
       dataIndex: 'privateKey'
     }
   ];
-  return <Table columns={columns} data={bitcoinData} />;
+  return <Table columns={columns} data={bitcoinData} noDataElement="没有数据" />;
 };
 
 export default GenerateData;

@@ -133,7 +133,7 @@ export function getExtendedKey(masterNode: BIP32Interface, path: string, version
   const xprv = account.toBase58();
   const xpub = account.neutered().toBase58();
   /* const xpub =
-    'xpub6C9cpFM4j5ETyzTf2GkBdiJBw4SCGNZZEBz6YmNu8PF6qCi8z5D9k33bnJWcpNpq6n3P66bFZArxM75qwVLbQRJ3h7EP3PrtAPGfyXtsE2G';
+'xpub6C9cpFM4j5ETyzTf2GkBdiJBw4SCGNZZEBz6YmNu8PF6qCi8z5D9k33bnJWcpNpq6n3P66bFZArxM75qwVLbQRJ3h7EP3PrtAPGfyXtsE2G';
   const bin_xpub: Uint8Array = bs58.decode(xpub);
   console.log('🚀 ~ file: Home.tsx:30 ~ bin_xpub:', bin_xpub);
   const sixth = uint8Array(bin_xpub);
@@ -150,13 +150,16 @@ export function getExtendedKey(masterNode: BIP32Interface, path: string, version
   return { resultPub, resultPrv };
 }
 export function getPrivateKey(masterNode: BIP32Interface, network: Btc.networks.Network) {
-  const privateKey = ECPair.fromPrivateKey(masterNode.privateKey!, { network });
-  return privateKey.toWIF();
+  /*  console.log('🚀 ~ file: plugin.ts:153 ~ getPrivateKey ~ masterNode:', masterNode.privateKey?.toString()); */
+  const ecPair = ECPair.fromPrivateKey(masterNode.privateKey!, { network });
+  /* console.log('🚀 ~ file: plugin.ts:154 ~ getPrivateKey ~ privateKey:', privateKey);
+  console.log('🚀 ~ file: plugin.ts:154 ~ getPrivateKey ~ privateKey:', privateKey.privateKey?.toString('hex')); */
+  return ecPair.toWIF();
 }
 export function getPublicKey(masterNode: BIP32Interface, network: Btc.networks.Network) {
   // console.log('🚀 ~ file: plugin.ts:60 ~ getPublicKey ~ network:', network);
-  const publicKey = ECPair.fromPublicKey(masterNode.publicKey!, { network });
-  return publicKey.publicKey.toString('hex');
+  const ecPair = ECPair.fromPublicKey(masterNode.publicKey!, { network });
+  return ecPair.publicKey.toString('hex');
 }
 export function getBip32Address(masterNode: BIP32Interface, networks: Btc.networks.Network) {
   // console.log('🚀 ~ file: GenerateBip32.tsx:16 ~ getAddress ~ networks:', networks);

@@ -127,51 +127,53 @@ const Home = () => {
     setWords(val);
   };
   const handleTabsChange = (key: string) => {
-    console.log('🚀 ~ file: Home.tsx:114 ~ handleTabsChange ~ key:', key);
-    console.log('🚀 ~ file: Home.tsx:80 ~ handleTabsChange ~ key:', typeof key);
     setActiveTab(key);
     setIsAccount(arrKey.some((item) => item === key));
-    const coinType = getCoinType(type);
-    let versionBytes = getVersionBytes(type, 2);
-    switch (key) {
-      case '1':
-        setFirstPath(`m/0`);
-        versionBytes = getVersionBytes(type, 2);
-        setPariChild(getExtendedKey(root!, `m/0`, versionBytes));
-        setSeedXprv(getPubPrv(root!.toBase58(), versionBytes.xprv));
-        break;
-      case '2':
-        setPathAccount(`m/44'/${coinType}'/0'`);
-        setFirstPath(`m/44'/${coinType}'/0'/0`);
-        versionBytes = getVersionBytes(type, 2);
-        setPairAccount(getExtendedKey(root!, `m/44'/${coinType}'/0'`, versionBytes));
-        setPariChild(getExtendedKey(root!, `m/44'/${coinType}'/0'/0`, versionBytes));
-        setSeedXprv(getPubPrv(root!.toBase58(), versionBytes.xprv));
-        break;
-      case '3':
-        setPathAccount(`m/49'/${coinType}'/0'`);
-        setFirstPath(`m/49'/${coinType}'/0'/0`);
-        versionBytes = getVersionBytes(type, 3);
-        setPairAccount(getExtendedKey(root!, `m/49'/${coinType}'/0'`, versionBytes));
-        setPariChild(getExtendedKey(root!, `m/49'/${coinType}'/0'/0`, versionBytes));
-        setSeedXprv(getPubPrv(root!.toBase58(), versionBytes.xprv));
-        break;
-      case '4':
-        setPathAccount(`m/84'/${coinType}'/0'`);
-        setFirstPath(`m/84'/${coinType}'/0'/0`);
-        versionBytes = getVersionBytes(type, 4);
-        setPairAccount(getExtendedKey(root!, `m/84'/${coinType}'/0'`, versionBytes));
-        setPariChild(getExtendedKey(root!, `m/84'/${coinType}'/0'/0`, versionBytes));
-        setSeedXprv(getPubPrv(root!.toBase58(), versionBytes.xprv));
-        break;
-      case '5':
-        setFirstPath(`m/0`);
-        versionBytes = getVersionBytes(type, 3);
-        setPariChild(getExtendedKey(root!, `m/0`, versionBytes));
-        setSeedXprv(getPubPrv(root!.toBase58(), versionBytes.xprv));
-        break;
-      default:
-        break;
+    if (root) {
+      console.log('🚀 ~ file: Home.tsx:114 ~ handleTabsChange ~ key:', key);
+      console.log('🚀 ~ file: Home.tsx:80 ~ handleTabsChange ~ key:', typeof key);
+      const coinType = getCoinType(type);
+      let versionBytes = getVersionBytes(type, 2);
+      switch (key) {
+        case '1':
+          setFirstPath(`m/0`);
+          versionBytes = getVersionBytes(type, 2);
+          setPariChild(getExtendedKey(root!, `m/0`, versionBytes));
+          setSeedXprv(getPubPrv(root!.toBase58(), versionBytes.xprv));
+          break;
+        case '2':
+          setPathAccount(`m/44'/${coinType}'/0'`);
+          setFirstPath(`m/44'/${coinType}'/0'/0`);
+          versionBytes = getVersionBytes(type, 2);
+          setPairAccount(getExtendedKey(root!, `m/44'/${coinType}'/0'`, versionBytes));
+          setPariChild(getExtendedKey(root!, `m/44'/${coinType}'/0'/0`, versionBytes));
+          setSeedXprv(getPubPrv(root!.toBase58(), versionBytes.xprv));
+          break;
+        case '3':
+          setPathAccount(`m/49'/${coinType}'/0'`);
+          setFirstPath(`m/49'/${coinType}'/0'/0`);
+          versionBytes = getVersionBytes(type, 3);
+          setPairAccount(getExtendedKey(root!, `m/49'/${coinType}'/0'`, versionBytes));
+          setPariChild(getExtendedKey(root!, `m/49'/${coinType}'/0'/0`, versionBytes));
+          setSeedXprv(getPubPrv(root!.toBase58(), versionBytes.xprv));
+          break;
+        case '4':
+          setPathAccount(`m/84'/${coinType}'/0'`);
+          setFirstPath(`m/84'/${coinType}'/0'/0`);
+          versionBytes = getVersionBytes(type, 4);
+          setPairAccount(getExtendedKey(root!, `m/84'/${coinType}'/0'`, versionBytes));
+          setPariChild(getExtendedKey(root!, `m/84'/${coinType}'/0'/0`, versionBytes));
+          setSeedXprv(getPubPrv(root!.toBase58(), versionBytes.xprv));
+          break;
+        case '5':
+          setFirstPath(`m/0`);
+          versionBytes = getVersionBytes(type, 3);
+          setPariChild(getExtendedKey(root!, `m/0`, versionBytes));
+          setSeedXprv(getPubPrv(root!.toBase58(), versionBytes.xprv));
+          break;
+        default:
+          break;
+      }
     }
   };
   const handleNetworkChange = (val: number) => {
@@ -276,19 +278,23 @@ const Home = () => {
       </Space>
       <Tabs key="card" activeTab={activeTab} tabPosition="top" onChange={handleTabsChange}>
         <TabPane key="1" title="BIP32">
-          {root ? <GenerateBip32 root={root} network={network}></GenerateBip32> : ''}
+          {<GenerateBip32 root={root!} network={network}></GenerateBip32>}
         </TabPane>
         <TabPane key="2" title="BIP44">
-          {root ? <GenerateBip44 root={root} network={network} coinType={coinType}></GenerateBip44> : ''}
+          {Number(activeTab) === 2 ? (
+            <GenerateBip44 root={root!} network={network} coinType={coinType}></GenerateBip44>
+          ) : (
+            ''
+          )}
         </TabPane>
         <TabPane key="3" title="BIP49">
-          {root ? <GenerateBip49 root={root} network={network} coinType={coinType}></GenerateBip49> : ''}
+          {<GenerateBip49 root={root!} network={network} coinType={coinType}></GenerateBip49>}
         </TabPane>
         <TabPane key="4" title="BIP84">
-          {root ? <GenerateBip84 root={root} network={network} coinType={coinType}></GenerateBip84> : ''}
+          {<GenerateBip84 root={root!} network={network} coinType={coinType}></GenerateBip84>}
         </TabPane>
         <TabPane key="5" title="BIP141">
-          {root ? <GenerateBip141 root={root} network={network}></GenerateBip141> : ''}
+          {<GenerateBip141 root={root!} network={network}></GenerateBip141>}
         </TabPane>
       </Tabs>
     </div>
