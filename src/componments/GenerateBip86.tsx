@@ -1,7 +1,7 @@
 import { BIP32Type, generateType, getBip86Address, getPrivateKey, getPublicKey, networkType } from '@/assets/plugin';
 import { Table } from '@arco-design/web-react';
 import { useCallback, useEffect, useState } from 'react';
-
+//  bc1p address
 const purpose = 86;
 const arrNum = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
 const GenerateData49 = ({ root, network, coinType }: { root: BIP32Type; network: networkType; coinType: number }) => {
