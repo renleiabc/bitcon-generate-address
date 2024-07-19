@@ -37,3 +37,5 @@ The core code is located in the plugin. ts file
 <a href="https://github.com/snapdao/btcsnap/blob/master/packages/snap/src/bitcoin/xpubConverter.ts" target="_blank">xpubConverter</a>
 
 <a href="https://www.npmjs.com/package/@swan-bitcoin/xpub-lib" target="_blank">Swan's Address Derivation Library</a>
+
+<a href="http://blog.shengchao.top/article/32" target="_blank">bitcoin TapRoot 地址生成</a>

@@ -1,23 +1,24 @@
-import { Button, Input, Space, Select, Message, Tabs, Typography } from '@arco-design/web-react';
-import { useState } from 'react';
+import GenerateBip141 from '@/componments/GenerateBip141';
 import GenerateBip32 from '@/componments/GenerateBip32';
 import GenerateBip44 from '@/componments/GenerateBip44';
 import GenerateBip49 from '@/componments/GenerateBip49';
 import GenerateBip84 from '@/componments/GenerateBip84';
-import GenerateBip141 from '@/componments/GenerateBip141';
+import GenerateBip86 from '@/componments/GenerateBip86';
+import { Button, Input, Message, Select, Space, Tabs, Typography } from '@arco-design/web-react';
+import { useState } from 'react';
 // import * as xpubLib from '@swan-bitcoin/resultPub-lib';
 import {
+  generateMnemonic,
+  generateRoot,
+  getCoinType,
   getExtendedKey,
   getNetwork,
-  getCoinType,
-  networkType,
-  generateRoot,
-  generateMnemonic,
-  validateMnemonic,
-  uint8Array,
-  toUint8Array,
   getPubPrv,
-  getVersionBytes
+  getVersionBytes,
+  networkType,
+  toUint8Array,
+  uint8Array,
+  validateMnemonic
 } from '@/assets/plugin';
 import { BIP32Interface } from 'bip32';
 import bs58 from 'bs58check';
@@ -171,6 +172,14 @@ const Home = () => {
           setPariChild(getExtendedKey(root!, `m/0`, versionBytes));
           setSeedXprv(getPubPrv(root!.toBase58(), versionBytes.xprv));
           break;
+        case '6':
+          setPathAccount(`m/86'/${coinType}'/0'`);
+          setFirstPath(`m/86'/${coinType}'/0'/0`);
+          versionBytes = getVersionBytes(type, 4);
+          setPairAccount(getExtendedKey(root!, `m/86'/${coinType}'/0'`, versionBytes));
+          setPariChild(getExtendedKey(root!, `m/86'/${coinType}'/0'/0`, versionBytes));
+          setSeedXprv(getPubPrv(root!.toBase58(), versionBytes.xprv));
+          break;
         default:
           break;
       }
@@ -295,6 +304,9 @@ const Home = () => {
         </TabPane>
         <TabPane key="5" title="BIP141">
           {<GenerateBip141 root={root!} network={network}></GenerateBip141>}
+        </TabPane>
+        <TabPane key="6" title="BIP86">
+          {<GenerateBip86 root={root!} network={network} coinType={coinType}></GenerateBip86>}
         </TabPane>
       </Tabs>
     </div>

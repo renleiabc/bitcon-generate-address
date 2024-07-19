@@ -1,14 +1,15 @@
-import * as Btc from 'bitcoinjs-lib';
-import * as ecc from 'tiny-secp256k1-browserify/lib';
-import BIP32Factory, { BIP32Interface } from 'bip32';
-import { ECPairFactory, ECPairAPI } from 'ecpair';
 import * as bip39 from '@scure/bip39';
 import { wordlist } from '@scure/bip39/wordlists/english';
-import { Buffer } from 'buffer-browser';
+import BIP32Factory, { BIP32Interface } from 'bip32';
+import * as Btc from 'bitcoinjs-lib';
 import bs58 from 'bs58check';
-
+import { Buffer } from 'buffer-browser';
+import { ECPairAPI, ECPairFactory } from 'ecpair';
+import * as ecc from 'tiny-secp256k1-browserify/lib';
+console.log(Btc.networks.bitcoin, Btc.networks.regtest);
 const ECPair: ECPairAPI = ECPairFactory(ecc);
 const bip32 = BIP32Factory(ecc);
+Btc.initEccLib(ecc);
 export type generateType = {
   key: string;
   path: string;
@@ -277,3 +278,8 @@ export function getBip84Address(masterNode: BIP32Interface, network: Btc.network
   }).address; // p2sh = 49 以bc开头的地址
 }
  */
+export function getBip86Address(masterNode: BIP32Interface, network: Btc.networks.Network) {
+  // 这样你就得到了一个TapRoot地址，地址是以bc1p开头。
+  const pubKey = Uint8Array.prototype.slice.call(masterNode.publicKey, 1, 33) as any;
+  return Btc.payments.p2tr({ pubkey: pubKey, network }).address; // p2tr = 86 以bc1p开头的地址
+}
