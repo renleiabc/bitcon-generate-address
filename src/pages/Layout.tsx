@@ -4,7 +4,6 @@ import viteLogo from '/vite.svg';
 import bitcoinLogo from '@/assets/bitcoin.png';
 function Layout() {
   const navigation = useNavigation();
-
   return (
     <div>
       <div className="flex justify-around">
