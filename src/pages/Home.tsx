@@ -35,7 +35,7 @@ const sixth = uint8Array(bin_xpub);
 console.log('🚀 ~ file: Home.tsx:33 ~ sixth:', sixth);
 const silce = sixth.slice(8);
 const str = toUint8Array(`049d7cb2${silce}`);
-console.log('🚀 ~ file: Home.tsx:38 ~ str:', str);
+//  console.log('🚀 ~ file: Home.tsx:38 ~ str:', str);
 const ypub = bs58.encode(str);
 console.log('🚀 ~ file: Home.tsx:34 ~ ypub:', ypub.length, ypub);
 const style = {
